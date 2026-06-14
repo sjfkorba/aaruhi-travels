@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: oklch(0.98 0.005 240);
+  --foreground: oklch(0.18 0.02 250);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.02 250);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.02 250);
+
+  --primary: oklch(0.34 0.11 255);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.73 0.19 55);
+  --secondary-foreground: oklch(1 0 0);
+
+  --accent: oklch(0.73 0.19 55);
+  --accent-foreground: oklch(1 0 0);
+
+  --muted: oklch(0.96 0.01 240);
+  --muted-foreground: oklch(0.5 0.02 250);
+
+  --destructive: oklch(0.63 0.24 27);
+
+  --border: oklch(0.92 0.01 240);
+  --input: oklch(0.92 0.01 240);
+  --ring: oklch(0.34 0.11 255);
+
+  --brand-navy: oklch(0.34 0.11 255);
+  --brand-orange: oklch(0.73 0.19 55);
+  --brand-soft: oklch(0.95 0.015 245);
+
+  --radius: 1rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-xl: var(--radius);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  section {
+    @apply relative;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-shell {
+    @apply mx-auto w-full max-w-7xl px-4 md:px-6 lg:px-8;
+  }
+
+  .section-space {
+    @apply py-16 md:py-24;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #08285d 0%, #0f3f8f 100%);
+  }
+
+  .gradient-orange {
+    background: linear-gradient(135deg, #ff7a00 0%, #ff9d3d 100%);
+  }
+
+  .surface-card {
+    background: color-mix(in oklab, white 88%, #eff4fb 12%);
+    @apply rounded-3xl border border-white/60 shadow-[0_10px_40px_rgba(8,40,93,0.08)];
+  }
+
+  .glass {
+    backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+  }
+
+  .shadow-brand {
+    box-shadow: 0 10px 40px rgba(8, 40, 93, 0.15);
+  }
+
+  .shadow-orange {
+    box-shadow: 0 10px 40px rgba(255, 122, 0, 0.22);
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #08285d 0%, #ff7a00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }

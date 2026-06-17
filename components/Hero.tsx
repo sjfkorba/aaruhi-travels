@@ -10,6 +10,7 @@ import {
   CalendarDays,
   Users,
 } from "lucide-react";
+import BookingForm from "./BookingForm";
 
 export default function Hero() {
   return (
@@ -117,105 +118,7 @@ export default function Hero() {
           </div>
 
           {/* Fare Card */}
-          <div>
-
-            <div className="rounded-3xl bg-primary p-6 shadow-2xl">
-
-              <div className="mb-6 flex items-center gap-2 text-white">
-                <IndianRupee />
-                <h2 className="text-2xl font-bold">
-                  Instant Fare Estimate
-                </h2>
-              </div>
-
-              {/* From */}
-              <div className="mb-4">
-                <label className="mb-2 block text-white">
-                  From
-                </label>
-
-                <div className="flex items-center rounded-xl bg-white px-4 py-4">
-                  <MapPin className="text-green-600" />
-
-                  <input
-                    type="text"
-                    placeholder="Raipur"
-                    className="ml-3 w-full outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* To */}
-              <div className="mb-4">
-                <label className="mb-2 block text-white">
-                  To
-                </label>
-
-                <div className="flex items-center rounded-xl bg-white px-4 py-4">
-                  <MapPin className="text-orange-500" />
-
-                  <input
-                    type="text"
-                    placeholder="Bilaspur"
-                    className="ml-3 w-full outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Grid */}
-              <div className="grid grid-cols-2 gap-4">
-
-                <div className="rounded-xl bg-white px-4 py-4">
-                  <div className="flex items-center gap-2">
-                    <CalendarDays size={18} />
-
-                    <span className="text-sm">
-                      Journey Date
-                    </span>
-                  </div>
-                </div>
-
-                <div className="rounded-xl bg-white px-4 py-4">
-                  <div className="flex items-center gap-2">
-                    <Users size={18} />
-
-                    <span className="text-sm">
-                      1 Passenger
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Fare */}
-              <div className="mt-6 rounded-2xl bg-white p-5">
-
-                <p className="text-sm text-muted-foreground">
-                  Estimated Fare
-                </p>
-
-                <h3 className="mt-2 text-4xl font-bold text-primary">
-                  ₹4,250
-                </h3>
-
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Approximate Fare
-                </p>
-
-              </div>
-
-              {/* Button */}
-              <button className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-secondary px-6 py-4 text-lg font-bold text-white shadow-orange transition hover:scale-[1.02]">
-
-                Get Fare & Book
-
-                <ArrowRightLeft size={18} />
-
-              </button>
-
-            </div>
-
-          </div>
+          <BookingForm/>
 
         </div>
 

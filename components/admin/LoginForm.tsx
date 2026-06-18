@@ -47,7 +47,7 @@ return ( <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
   </h1>
 
   <p className="mb-6 text-center text-gray-500">
-    Aaruhi Travels CRM
+    KRT GROUP CRM
   </p>
 
   <div className="space-y-4">

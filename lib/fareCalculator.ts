@@ -7,28 +7,24 @@ export const VEHICLES = {
     localPackage: 1999,
     oldRatePerKm: 12,
   },
-
   ertiga: {
     label: "Ertiga",
     nightHalt: 600,
     localPackage: 2499,
     oldRatePerKm: 14,
   },
-
   innova: {
     label: "Innova",
     nightHalt: 800,
     localPackage: 3299,
     oldRatePerKm: 17,
   },
-
   crysta: {
     label: "Innova Crysta",
     nightHalt: 900,
     localPackage: 3999,
     oldRatePerKm: 18,
   },
-
   scorpio: {
     label: "Scorpio",
     nightHalt: 700,
@@ -73,6 +69,17 @@ export type CalculateFareResult = {
   remarks: string[];
 };
 
+// Naya Extra KM Logic (tumhare bataye hisaab se)
+export function getExtraKM(actualDistance: number): number {
+  if (actualDistance <= 50) return 5;
+  if (actualDistance <= 100) return 6;
+  if (actualDistance <= 150) return 7;
+  if (actualDistance <= 250) return 10;
+  if (actualDistance <= 400) return 15;
+  if (actualDistance <= 600) return 20;
+  return 25;
+}
+
 const MIN_FARE = {
   sedan: 1799,
   ertiga: 2300,
@@ -98,7 +105,6 @@ function getOneWayRate(
       if (distance <= 500) return 17;
       return 16;
 
-    // Innova & Crysta Same Pricing
     case "innova":
     case "crysta":
       if (distance <= 250) return 26;
@@ -213,6 +219,10 @@ export function calculateFare({
   const oneWayDistance =
     Number.isFinite(distance) && distance > 0 ? Math.round(distance) : 0;
 
+  // Naya Extra KM logic apply karo
+  const extraDistance = getExtraKM(oneWayDistance);
+  const billingDistance = oneWayDistance + extraDistance;
+
   let fare = 0;
   let discount = 0;
   let discountApplied = false;
@@ -220,14 +230,14 @@ export function calculateFare({
   if (bookingType === "oneway") {
     if (oneWayDistance <= 250) {
       const rate = getOneWayRate(vehicleType, oneWayDistance);
-      fare = oneWayDistance * rate;
+      fare = billingDistance * rate;
       fare = Math.max(fare, MIN_FARE[vehicleType]);
     } else if (oneWayDistance <= 600) {
-      const baseFare = oneWayDistance * vehicle.oldRatePerKm;
+      const baseFare = billingDistance * vehicle.oldRatePerKm;
       fare = baseFare * 1.90;
       discountApplied = false;
     } else {
-      const baseFare = oneWayDistance * vehicle.oldRatePerKm;
+      const baseFare = billingDistance * vehicle.oldRatePerKm;
       fare = baseFare * 1.75;
       discount = Math.round(baseFare * 0.18);
       discountApplied = false;
@@ -257,7 +267,7 @@ export function calculateFare({
 
   return {
     actualDistance: oneWayDistance,
-    extraDistance: 0,
+    extraDistance: extraDistance,
     distance: displayDistance,
     fare: finalFare,
     discount,

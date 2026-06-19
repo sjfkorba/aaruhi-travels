@@ -128,15 +128,25 @@ export default function PopularRoutes() {
               {/* CTA */}
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
 
-                <button className="flex-1 rounded-xl bg-primary px-5 py-3 font-semibold text-white transition hover:opacity-90">
-                  Get Fare
-                </button>
+  <a
+    href="tel:+919244137353"
+    className="flex-1 rounded-xl bg-primary px-5 py-3 text-center font-semibold text-white transition hover:opacity-90"
+  >
+    Call Now
+  </a>
 
-                <button className="flex-1 rounded-xl border border-primary px-5 py-3 font-semibold text-primary transition hover:bg-primary hover:text-white">
-                  Book on WhatsApp
-                </button>
+  <a
+    href={`https://wa.me/919244137353?text=${encodeURIComponent(
+      `Hello Aaruhi Travels, I want fare details for ${route.from} to ${route.to}.`
+    )}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-1 rounded-xl border border-primary px-5 py-3 text-center font-semibold text-primary transition hover:bg-primary hover:text-white"
+  >
+    Book on WhatsApp
+  </a>
 
-              </div>
+</div>
             </div>
           ))}
         </div>

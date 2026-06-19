@@ -133,7 +133,7 @@ export default function RoutesPage() {
                   </button>
 
                   <a
-                    href="https://wa.me/917773041111"
+                    href="https://wa.me/919244137353"
                     target="_blank"
                     className="flex-1 rounded-xl border border-primary py-3 text-center font-semibold text-primary"
                   >
@@ -164,7 +164,7 @@ export default function RoutesPage() {
             </p>
 
             <a
-              href="https://wa.me/917773041111"
+              href="https://wa.me/919244137353"
               target="_blank"
               className="mt-6 inline-block rounded-xl bg-secondary px-8 py-4 font-semibold text-white"
             >

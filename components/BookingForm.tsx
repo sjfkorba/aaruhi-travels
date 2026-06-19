@@ -253,7 +253,7 @@ export default function BookingForm() {
           </div>
         </div>
 
-        <div className="space-y-4 p-4 sm:p-5 lg:space-y-5 lg:p-6">
+        <div className="p-4 sm:p-5 lg:p-6">
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               Select Trip Type

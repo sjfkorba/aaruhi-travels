@@ -18,13 +18,14 @@ import {
   ChevronDown,
   ChevronUp,
   Flame,
-  Filter,
   CheckCircle2,
   XCircle,
   PhoneCall,
   BadgeIndianRupee,
   SlidersHorizontal,
   X,
+  Clock3,
+  CalendarDays,
 } from "lucide-react";
 import { db } from "@/lib/firebase";
 
@@ -54,6 +55,23 @@ function normalize(value?: string) {
   return (value || "").toString().trim().toUpperCase();
 }
 
+function getSafeDate(value: any): Date | null {
+  if (!value) return null;
+
+  if (typeof value?.toDate === "function") {
+    const d = value.toDate();
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  if (typeof value?.seconds === "number") {
+    const d = new Date(value.seconds * 1000);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
 function formatIndianDate(dateString?: string) {
   if (!dateString) return "N/A";
   const d = new Date(dateString);
@@ -73,6 +91,8 @@ function formatIndianTime(timeString?: string) {
   const date = new Date();
   date.setHours(Number(hours));
   date.setMinutes(Number(minutes));
+  date.setSeconds(0);
+  date.setMilliseconds(0);
 
   return date.toLocaleTimeString("en-IN", {
     hour: "numeric",
@@ -81,10 +101,51 @@ function formatIndianTime(timeString?: string) {
   });
 }
 
+function formatCreatedAtIndian(value: any) {
+  const d = getSafeDate(value);
+  if (!d) return "N/A";
+
+  return d.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+function formatRelativeCreatedAt(value: any) {
+  const d = getSafeDate(value);
+  if (!d) return "N/A";
+
+  const diffMs = d.getTime() - Date.now();
+  const diffSeconds = Math.round(diffMs / 1000);
+  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+  const absSeconds = Math.abs(diffSeconds);
+
+  if (absSeconds < 60) return rtf.format(diffSeconds, "second");
+
+  const diffMinutes = Math.round(diffSeconds / 60);
+  if (Math.abs(diffMinutes) < 60) return rtf.format(diffMinutes, "minute");
+
+  const diffHours = Math.round(diffMinutes / 60);
+  if (Math.abs(diffHours) < 24) return rtf.format(diffHours, "hour");
+
+  const diffDays = Math.round(diffHours / 24);
+  if (Math.abs(diffDays) < 30) return rtf.format(diffDays, "day");
+
+  const diffMonths = Math.round(diffDays / 30);
+  if (Math.abs(diffMonths) < 12) return rtf.format(diffMonths, "month");
+
+  const diffYears = Math.round(diffMonths / 12);
+  return rtf.format(diffYears, "year");
+}
+
 function getCreatedAtValue(lead: any) {
-  if (lead?.createdAt?.seconds) return lead.createdAt.seconds * 1000;
-  const parsed = new Date(lead?.createdAt || 0).getTime();
-  return Number.isNaN(parsed) ? 0 : parsed;
+  const d = getSafeDate(lead?.createdAt);
+  return d ? d.getTime() : 0;
 }
 
 function getJourneyDateValue(lead: any) {
@@ -111,9 +172,9 @@ function getLeadPriorityScore(lead: any) {
   if (lead?.isHot) score += 100;
   if (lead?.followUpRequired) score += 30;
 
-  if (lead?.createdAt?.seconds) {
-    const diffHours =
-      (Date.now() - lead.createdAt.seconds * 1000) / (1000 * 60 * 60);
+  const createdAtMs = getCreatedAtValue(lead);
+  if (createdAtMs) {
+    const diffHours = (Date.now() - createdAtMs) / (1000 * 60 * 60);
 
     if (diffHours <= 1) score += 40;
     else if (diffHours <= 6) score += 25;
@@ -609,7 +670,7 @@ export default function LiveLeads({ onSelectLead }: LiveLeadsProps) {
 
                           {currentStatus === "NEW" && (
                             <span className="inline-flex items-center gap-1 rounded-full bg-lime-50 px-2.5 py-1 text-[11px] font-medium text-lime-700">
-                              <span className="h-2 w-2 rounded-full bg-lime-500 animate-pulse" />
+                              <span className="h-2 w-2 animate-pulse rounded-full bg-lime-500" />
                               Fresh lead
                             </span>
                           )}
@@ -630,6 +691,28 @@ export default function LiveLeads({ onSelectLead }: LiveLeadsProps) {
                           <p className="cursor-text">
                             Agency: {lead.agencyName || "Aaruhi Travels"}
                           </p>
+                        </div>
+
+                        <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                          <div className="rounded-2xl bg-slate-50 p-3">
+                            <div className="mb-1 flex items-center gap-2 text-xs text-slate-500">
+                              <CalendarDays size={14} />
+                              Created On
+                            </div>
+                            <p className="cursor-text font-semibold text-slate-900">
+                              {formatCreatedAtIndian(lead.createdAt)}
+                            </p>
+                          </div>
+
+                          <div className="rounded-2xl bg-slate-50 p-3">
+                            <div className="mb-1 flex items-center gap-2 text-xs text-slate-500">
+                              <Clock3 size={14} />
+                              Generated
+                            </div>
+                            <p className="cursor-text font-semibold text-slate-900">
+                              {formatRelativeCreatedAt(lead.createdAt)}
+                            </p>
+                          </div>
                         </div>
 
                         <div className="mt-4 rounded-2xl bg-slate-50 p-3">
@@ -720,10 +803,8 @@ export default function LiveLeads({ onSelectLead }: LiveLeadsProps) {
                                 <span className="font-semibold text-slate-900">
                                   Last Updated:
                                 </span>{" "}
-                                {lead.updatedAt?.seconds
-                                  ? new Date(
-                                      lead.updatedAt.seconds * 1000
-                                    ).toLocaleString("en-IN")
+                                {lead.updatedAt
+                                  ? formatCreatedAtIndian(lead.updatedAt)
                                   : "N/A"}
                               </p>
                             </div>
@@ -732,7 +813,7 @@ export default function LiveLeads({ onSelectLead }: LiveLeadsProps) {
                       </div>
 
                       <div
-                        className="flex flex-row flex-wrap gap-2 xl:w-[240px] xl:flex-col select-none"
+                        className="select-none flex flex-row flex-wrap gap-2 xl:w-[240px] xl:flex-col"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <a
@@ -824,7 +905,7 @@ export default function LiveLeads({ onSelectLead }: LiveLeadsProps) {
             onClick={() => setIsFilterOpen(false)}
           />
 
-          <div className="absolute inset-x-0 bottom-0 h-[88vh] rounded-t-[28px] bg-white p-5 shadow-2xl md:inset-y-0 md:right-0 md:left-auto md:h-full md:w-[420px] md:rounded-none md:rounded-l-[28px]">
+          <div className="absolute inset-x-0 bottom-0 h-[88vh] rounded-t-[28px] bg-white p-5 shadow-2xl md:inset-y-0 md:left-auto md:right-0 md:h-full md:w-[420px] md:rounded-none md:rounded-l-[28px]">
             <div className="flex items-start justify-between border-b border-slate-200 pb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">

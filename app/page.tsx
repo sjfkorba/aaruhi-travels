@@ -5,30 +5,21 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import Testimonials from "../components/Testimonials";
 import Footer from "../components/Footer";
 import FloatingButtons from "../components/FloatingButtons";
+import TaxiServices from "@/components/TaxiServices";
+import PremiumFleet from "@/components/PremiumFleet";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background">
-      {/* Navigation */}
+    <main className="min-h-screen bg-[#FFFAF5]">
       <Navbar />
-
-      {/* Hero + Fare Calculator */}
       <Hero />
-
-      {/* Popular Routes */}
       <PopularRoutes />
-
-      {/* Why Choose Us */}
+      <TaxiServices/>
+      <PremiumFleet/>
       <WhyChooseUs />
-
-      {/* Customer Reviews */}
-      <Testimonials />
-
-      {/* Footer */}
+      {/* <Testimonials /> */}
       <Footer />
-
-      {/* Sticky Conversion Buttons */}
-      <FloatingButtons />
+      {/* <FloatingButtons /> */}
     </main>
   );
 }

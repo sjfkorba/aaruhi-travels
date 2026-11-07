@@ -116,3 +116,40 @@
     -webkit-text-fill-color: transparent;
   }
 }
+
+
+/* =====================================
+   AUTOMATIC ROUTE CAROUSEL
+===================================== */
+
+.route-carousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+.route-carousel-track {
+  display: flex;
+  width: max-content;
+  animation: routeAutoScroll 100s linear infinite;
+}
+
+.route-carousel:hover .route-carousel-track,
+.route-carousel:focus-within .route-carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes routeAutoScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-carousel-track {
+    animation: none;
+  }
+}

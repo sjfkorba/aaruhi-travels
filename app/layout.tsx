@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import Script from "next/script";
@@ -48,6 +49,22 @@ export const metadata: Metadata = {
 
   creator: "Aaruhi Travels",
 
+  icons: {
+    icon: [
+      {
+        url: "/logo.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/logo.png",
+    apple: [
+      {
+        url: "/logo.png",
+        type: "image/png",
+      },
+    ],
+  },
+
   openGraph: {
     title: "Aaruhi Travels",
     description:
@@ -56,6 +73,12 @@ export const metadata: Metadata = {
     siteName: "Aaruhi Travels",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        alt: "Aaruhi Travels - One Way Taxi Service",
+      },
+    ],
   },
 
   robots: {

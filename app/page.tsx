@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import FloatingButtons from "../components/FloatingButtons";
 import TaxiServices from "@/components/TaxiServices";
 import PremiumFleet from "@/components/PremiumFleet";
+import PromotionPopup from "@/components/PromotionPopup";
 
 export default function HomePage() {
   return (
@@ -19,7 +20,7 @@ export default function HomePage() {
       <WhyChooseUs />
       {/* <Testimonials /> */}
       <Footer />
-      {/* <FloatingButtons /> */}
+      <PromotionPopup/>
     </main>
   );
 }

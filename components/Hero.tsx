@@ -43,7 +43,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 z-0">
         <Image
-          src="/main-image.png"
+          src="/main image.png"
           alt="Aaruhi Travels taxi travel background"
           fill
           priority
@@ -135,55 +135,52 @@ export default function Hero() {
 
             </div>
 
-            {/* CTA BUTTONS */}
+           
+{/* RESPONSIVE PREMIUM CTA BUTTONS */}
+<div className="mt-7 flex w-full max-w-[620px] flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-3 lg:gap-4">
 
-            <div className="mt-8 flex flex-wrap gap-3">
+  {/* CALL BUTTON */}
+  <a
+    href="tel:+919244137353"
+    className="group flex min-h-[100px] w-full items-center gap-4 rounded-[22px] bg-[#0866F5] px-5 py-4 text-left text-white shadow-[0_10px_28px_rgba(8,102,245,0.25)] transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl sm:min-h-[84px] sm:flex-1 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[72px] lg:gap-3 lg:rounded-xl lg:px-4 lg:py-3"
+  >
+    <span className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-full bg-white/15 transition group-hover:bg-white/25 sm:h-11 sm:w-11 lg:h-10 lg:w-10">
+      <Phone size={26} strokeWidth={2.2} className="sm:h-[22px] sm:w-[22px]" />
+    </span>
 
-              <a
-                href="tel:+919244137353"
-                className="group flex min-h-[54px] items-center gap-3 rounded-xl bg-blue-600 px-5 py-3 text-white shadow-lg shadow-blue-900/30 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
-              >
+    <span className="flex min-w-0 flex-col gap-1">
+      <span className="text-[17px] font-extrabold leading-tight sm:text-[14px] lg:text-[15px]">
+        BOOK VIA CALL
+      </span>
+      <span className="text-sm font-medium text-blue-100 sm:text-xs lg:text-[12px]">
+        Speak with our team
+      </span>
+    </span>
+  </a>
 
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
-                  <Phone size={18} />
-                </span>
+  {/* WHATSAPP BUTTON */}
+  <a
+    href="https://wa.me/919244137353"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex min-h-[100px] w-full items-center gap-4 rounded-[22px] bg-[#00B94F] px-5 py-4 text-left text-white shadow-[0_10px_28px_rgba(0,185,79,0.22)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#009e43] hover:shadow-xl sm:min-h-[84px] sm:flex-1 sm:gap-3 sm:rounded-2xl sm:px-4 sm:py-3 lg:min-h-[72px] lg:gap-3 lg:rounded-xl lg:px-4 lg:py-3"
+  >
+    <span className="flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-full bg-white/15 transition group-hover:bg-white/25 sm:h-11 sm:w-11 lg:h-10 lg:w-10">
+      <MessageCircle size={26} strokeWidth={2.2} className="sm:h-[22px] sm:w-[22px]" />
+    </span>
 
-                <span>
-                  <span className="block text-xs font-extrabold sm:text-sm">
-                    BOOK VIA CALL
-                  </span>
+    <span className="flex min-w-0 flex-col gap-1">
+      <span className="text-[17px] font-extrabold leading-tight sm:text-[14px] lg:text-[15px]">
+        BOOK VIA WHATSAPP
+      </span>
+      <span className="text-sm font-medium text-green-100 sm:text-xs lg:text-[12px]">
+        Chat with us instantly
+      </span>
+    </span>
+  </a>
 
-                  <span className="mt-0.5 block text-[10px] text-blue-100">
-                    Speak with our team
-                  </span>
-                </span>
+</div>
 
-              </a>
-
-              <a
-                href="https://wa.me/919244137353"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex min-h-[54px] items-center gap-3 rounded-xl bg-green-600 px-5 py-3 text-white shadow-lg shadow-green-900/30 transition-all duration-300 hover:-translate-y-1 hover:bg-green-700"
-              >
-
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
-                  <MessageCircle size={18} />
-                </span>
-
-                <span>
-                  <span className="block text-xs font-extrabold sm:text-sm">
-                    BOOK VIA WHATSAPP
-                  </span>
-
-                  <span className="mt-0.5 block text-[10px] text-green-100">
-                    Chat with us instantly
-                  </span>
-                </span>
-
-              </a>
-
-            </div>
 
             {/* SERVICE AREAS */}
 
